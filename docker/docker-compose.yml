@@ -1,0 +1,10 @@
+services:
+  mysql:
+    image: mysql:latest
+
+  postgresql:
+    image: bitnami/postgresql:latest
+
+  mariadb:
+    image: mariadb:latest
+

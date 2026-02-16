@@ -1,0 +1,22 @@
+{
+    "name": "masqueradis/migration",
+    "description": "Simple php migration mechanism",
+    "type": "library",
+    "require-dev": {
+        "phpstan/phpstan": "^2.1",
+        "friendsofphp/php-cs-fixer": "^3.94"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Masqueradis\\Migration\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Masqueradis",
+            "email": "masqueradisu@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}

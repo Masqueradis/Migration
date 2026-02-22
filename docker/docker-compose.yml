@@ -1,10 +1,55 @@
 services:
+  php:
+    build:
+      context: ..
+      dockerfile: docker/php/Dockerfile
+    container_name: ${PROJECT_NAME}_php
+    environment:
+      PHP_IDE_CONFIG: "serverName=localhost"
+      DB_DRIVER: ${DB_DRIVER}
+      DB_HOST: ${DB_HOST}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASSWORD}
+    volumes:
+      - ../:/var/www/html
+    networks:
+      - ${PROJECT_NAME}
+
   mysql:
     image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    container_name: ${PROJECT_NAME}_mysql
+    networks:
+      - ${PROJECT_NAME}
 
   postgresql:
     image: bitnami/postgresql:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    container_name: ${PROJECT_NAME}_postgresql
+    networks:
+      - ${PROJECT_NAME}
+
 
   mariadb:
     image: mariadb:latest
+    ports:
+      - "3307:3306"
+    environment:
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
+    container_name: ${PROJECT_NAME}_mariadb
+    networks:
+      - ${PROJECT_NAME}
 
+networks:
+  Migration:
+    driver: bridge

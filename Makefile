@@ -1,6 +1,6 @@
 DOCKER_COMPOSE=docker compose -f docker/docker-compose.yml --env-file docker/.env
 
-.PHONY: up down restart ps
+.PHONY: up down restart ps build
 
 up:
 	${DOCKER_COMPOSE} up -d
@@ -14,3 +14,6 @@ restart:
 
 ps:
 	${DOCKER_COMPOSE} ps
+
+build:
+	${DOCKER_COMPOSE} build

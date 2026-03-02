@@ -30,6 +30,7 @@ class Schema
     public function create(string $table, callable $callback): void
     {
         $blueprint = new Blueprint($table);
+
         $callback($blueprint);
 
         $sql = $this->grammar->compileCreate($blueprint);
@@ -44,8 +45,11 @@ class Schema
         $this->pdo->exec($sql);
     }
 
-    public function table(string $table): QueryBuilder
+    public function hasTable(string $table): bool
     {
-        return new QueryBuilder($this->pdo, $table, $this->grammar);
+        $sql = $this->grammar->compileTableExists($table);
+        $stmt = $this->pdo->query($sql);
+
+        return $stmt && $stmt->rowCount() > 0;
     }
 }

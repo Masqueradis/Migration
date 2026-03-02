@@ -58,4 +58,10 @@ class PostgreSqlGrammar extends BaseGrammar implements MigrationInterface
             return "{$this->wrap($w['column'])} {$w['operator']} ?";
         }, $wheres));
     }
+
+    public function compileTableExists(string $table): string
+    {
+        return "SELECT * FROM information_schema.tables 
+        WHERE table_schema = 'public' AND table_name = '{$table}'";
+    }
 }

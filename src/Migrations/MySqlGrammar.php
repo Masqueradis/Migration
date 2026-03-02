@@ -18,7 +18,7 @@ class MySqlGrammar extends BaseGrammar implements MigrationInterface
         $columns = [];
         foreach ($blueprint->getColumns() as $column) {
             $type = match ($column->type) {
-                'id' => 'INT_AUTO_INCREMENT PRIMARY KEY',
+                'id' => 'INT AUTO_INCREMENT PRIMARY KEY',
                 'string' => 'VARCHAR(' . ($column->length ?: 255) . ')',
                 'integer' => "INT",
                 default => 'TEXT',
@@ -58,5 +58,11 @@ class MySqlGrammar extends BaseGrammar implements MigrationInterface
         return implode(' AND ', array_map(function ($w) {
             return "{$this->wrap($w['column'])} {$w['operator']} ?";
         }, $wheres));
+    }
+
+    public function compileTableExists(string $table): string
+    {
+        return "SELECT * FROM information_schema.tables 
+        WHERE table_schema = DATABASE() AND table_name = '{$table}'";
     }
 }

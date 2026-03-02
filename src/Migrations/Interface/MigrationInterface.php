@@ -13,4 +13,5 @@ interface MigrationInterface
     public function compileSelect(string $table, array $columns, array $wheres): string;
     public function compileDelete(string $table, array $wheres): string;
     public function compileInsert(string $table, array $values): string;
+    public function compileTableExists(string $table): string;
 }
